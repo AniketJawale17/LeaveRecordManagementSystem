@@ -10,8 +10,9 @@
       <div id="section1" class="container-fluid bg-success" style="padding-top:70px;padding-bottom:70px">
 <center>  <h1>Confirm Logout</h1>
 
-    <button id="login" type="button" name="login"> <a href="login.php">LOGOUT</a> </button>
+    <button id="login" type="button" name="login">LOGOUT</button>
 </center>
 </div>
   </body>
 </html>
+<?php session_destroy(); ?>

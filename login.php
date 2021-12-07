@@ -63,8 +63,8 @@ if(isset($_POST['b1'])){
     if($count>0){
   		$row=mysqli_fetch_assoc($res);
   		$_SESSION['email']=$row['email'];
-  		$_SESSION['USER_ID']=$row['id'];
-      echo "Login successful";
+  		$_SESSION['id']=$row['id'];
+      $_SESSION['username']=$row['username'];
       header('location:welcome.php');
     }
 else{
