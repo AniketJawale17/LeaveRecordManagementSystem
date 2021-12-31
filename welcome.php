@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +72,7 @@
         </ul>
       </li>
       <li><a href="about.php">About</a></li>
+      <li><a href="about.php"><?php echo"".$_SESSION['username']; ?></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="contactus.php"><span class="glyphicon glyphicon-user"></span> contactus</a></li>
