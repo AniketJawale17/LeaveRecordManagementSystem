@@ -44,7 +44,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database ="Leave Record";
+$database ="Employee leaving management system";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password,$database);
@@ -57,14 +57,15 @@ if(isset($_POST['b1'])){
 
     $uname=$_POST['Uname'];
     $pass=$_POST['pswd'];
-    $sql="select * from employee where username='$uname' and password='$pass'";
+    $sql="select * from employee where Employee_username='$uname' and Employee_passwords='$pass'";
     $res=mysqli_query($conn,$sql);
     $count=mysqli_num_rows($res);
     if($count>0){
   		$row=mysqli_fetch_assoc($res);
-  		$_SESSION['email']=$row['email'];
-  		$_SESSION['id']=$row['id'];
-      $_SESSION['username']=$row['username'];
+  		$_SESSION['email']=$row['Employee_email'];
+  		$_SESSION['id']=$row['Employee_id'];
+      $_SESSION['username']=$row['Employee_username'];
+      $_SESSION['name']=$row['Employee_name'];
       header('location:welcome.php');
     }
 else{

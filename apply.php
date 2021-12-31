@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+<?php include("navbar.php"); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -67,42 +69,94 @@
   </head>
   <body>
     <div id="Application" class="container-fluid bg-success">
-      <form class="application" action="welcome.php" method="post" name="application">
+      <form class="application" action="" method="post" name="application">
       <h1>Application form</h1>
 
-        Name of Department: &nbsp <select class="form-select" aria-label="Default select example">
+        Name of Department: &nbsp <select class="form-select" name="sl1" id="sl1" aria-label="Default select example" onchange="populate(this.id,'sl2')">
         <option selected>Select Department</option>
         <option value="1">CS</option>
         <option value="2">IT</option>
-        <option value="4">MECH</option>
-        <option value="3">CIVIL</option>
-        <option value="6">Electrical</option>
-        <option value="5">E&TC</option>
+        <option value="3">MECH</option>
+        <option value="4">CIVIL</option>
+        <option value="5">Electrical</option>
+        <option value="6">E&TC</option>
     </select><br>
-    Name of Faculty: &nbsp &nbsp &nbsp &nbsp <select class="form-select" aria-label="Default select example">
-    <option selected>Select Faculty</option>
-    <option value="1">A</option>
-    <option value="2">B</option>
-    <option value="3">C</option>
-    <option value="4">D</option>
-    <option value="5">E</option>
-    <option value="6">F</option>
-    <option value="7">G</option>
+    Name of Faculty: &nbsp &nbsp &nbsp &nbsp <select class="form-select" name="sl2" id="sl2">
+
   </select>
       <br>
-    Type Of leave: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <select class="form-select" aria-label="Default select example">
+    Type Of leave: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <select class="form-select" name="sl3" id="sl3" aria-label="Default select example">
     <option selected>Select LeaveType</option>
     <option value="1">Medical LeaveL</option>
     <option value="2">Casual Leave</option>
     <option value="3">Other</option>
     </select><br>
-    From:<input type="date" name="from" value="from"> to:<input type="date" name="to" value="To"></br>
-    Total number of days:<input type="text" name="Days" style="height:10%;width:10%;"></br>
+    From:<input type="date" name="from" value="from" id="from"> to:<input type="date" name="To" value="To" id="To" onchange="getLeaveDay(from,To)"></br>
+    Total number of days:<input type="text" name="Days" id="days" style="height:10%;width:10%;"></br>
     <label for="reason">Type Your Problem</label>
     <textarea id="reason" name="reason" placeholder="write Reason of Leave" style="height:100px" required></textarea>
     <br><input type="submit" name="submit" value="Apply">
-    </div>
-</form>
 
+</form>
+    </div>
+<script type="text/javascript">
+    function populate(s1,s2){
+      var s1= document.getElementById(s1);
+      var s2= document.getElementById(s2);
+      s2.innerHTML= "";
+      if(s1.value == "1"){
+        var optionArray=['cs1|CS1','cs2|CS2', 'cs3|CS3'];
+      }
+      else if(s1.value =="2"){
+        var optionArray=['it1|IT1','it2|IT2', 'it3|IT3'];
+      }
+      else if(s1.value == "3"){
+        var optionArray=['mech1|MECH1','mech2|MECH2','mech3|MECH3'];
+      }
+      else if(s1.value == "4"){
+        var optionArray=['cv1|civil1','civil2|CIVIL2','civil|CIVIL3'];
+      }
+      else if(s1.value == "5"){
+        var optionArray=['1|ele1','2|ele2','el3|ele3'];
+      }
+      else{
+        var optionArray=['1|1','2|2','3|3'];
+      }
+      for (var option in optionArray){
+        var pair = optionArray[option].split("|");
+        var newoption = document.createElement("option");
+        newoption.value=pair[0];
+        newoption.innerHTML=pair[1];
+        s2.options.add(newoption);
+      }
+    }
+</script>
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database ="Employee leaving management system";
+// Create connection
+$conn = new mysqli($servername, $username, $password,$database);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+if(isset($_POST['submit'])){
+  $department=$_POST['sl1'];
+  $faculty=$_POST['sl2'];
+  $type=$_POST['sl3'];
+  $from=$_POST['from'];
+  $to=$_POST['To'];
+  $reason=$_POST['reason'];
+  $sql="INSERT INTO application VALUES ('$department','$faculty','$type','$from','$to','$reason')";
+  $res=mysqli_query($conn,$sql);
+  echo"Submitted Successfully";
+  header('location:welcome.php');
+}
+
+
+?>
   </body>
 </html>

@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+<?php include("navbar.php"); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -44,7 +46,7 @@ input[type=submit]:hover {
   </head>
   <body>
     <div class="container">
-      <form action="login.php">
+      <form class="contactus" name="contact" action=""  method = "POST">
 
         <label for="fname">First Name</label>
         <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
@@ -61,9 +63,34 @@ input[type=submit]:hover {
         <label for="subject">Type Your Problem</label>
         <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px" required></textarea>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="submit" name="submit">
 
       </form>
     </div>
+    <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database ="Employee leaving management system";
+    // Create connection
+    $conn = new mysqli($servername, $username, $password,$database);
+
+    // Check connection
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
+    if(isset($_POST['submit'])){
+      $fname=$_POST['firstname'];
+      $lname=$_POST['lastname'];
+      $email=$_POST['Emailid'];
+      $mobno=$_POST['Mobno'];
+      $subject=$_POST['subject'];
+      $sql="INSERT INTO contact VALUES ('$fname','$lname','$email','$mobno','$subject')";
+      $res=mysqli_query($conn,$sql);
+      header('location:login.php');
+    }
+
+
+?>
   </body>
 </html>
