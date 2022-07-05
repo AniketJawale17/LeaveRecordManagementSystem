@@ -9,10 +9,20 @@
   <body>
       <div id="section1" class="container-fluid bg-success" style="padding-top:70px;padding-bottom:70px">
 <center>  <h1>Confirm Logout</h1>
+  <form class="" action="" method="post">
 
-    <button id="login" type="button" name="login">LOGOUT</button>
+
+    <button id="login" type="submit" name="logout">LOGOUT</button>
+      </form>
 </center>
 </div>
   </body>
 </html>
-<?php session_destroy(); ?>
+<?php
+  if(isset($_POST['logout'])){
+    session_destroy();
+    unset($_SESSION['username']);
+    unset($_SESSION['email']);
+    unset($_SESSION['password']);
+    header('location:login.php');}
+  ?>

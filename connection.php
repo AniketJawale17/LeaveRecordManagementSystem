@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database ="Leave Record";
+$database ="Employee leaving management system";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password,$database);
